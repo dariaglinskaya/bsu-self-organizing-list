@@ -1,10 +1,9 @@
-'use strict'
+'use strict';
 class Node {
     constructor(data) {
         this.data = data;
         this.prev = null;
         this.next = null;
-
     }
 }
 
@@ -14,12 +13,12 @@ class SelfOrganizedList {
         this.tail = null;
     }
     size() {
-        if(this.head == null){
+        if(!this.head) {
             return 0;
         }
         let count = 0;
         let node = this.head;
-        while(node != null){
+        while(node) {
             count++;
             node = node.next;
         }
@@ -39,13 +38,11 @@ class SelfOrganizedList {
     }
     at(index) {
         let currentNode = this.head;
-        console.log(currentNode);
         const size = this.size();
-        console.log(size);
         let count = 0;
         if (size === 0 || index < 0 || index > size - 1) {
             return null;
-        }else{
+        } else {
             while (count < index) {
                 currentNode = currentNode.next;
                 count++;
@@ -66,46 +63,46 @@ class SelfOrganizedList {
     toArray() {
         let result = [];
         let current = this.head;
-        while(current){
+        while(current) {
             result.push(current.data);
             current = current.next;
         }
         return result;
     }
     removeAt(index) {
-        if (index > -1 && index < this.size()){
+        if (index > -1 && index < this.size()) {
             let current = this.head;
             let i = 0;
-            if (index === 0){
+            if (index === 0) {
                 this.head = current.next;
-                if (!this.head){
+                if (!this.head) {
                     this.tail = null;
                 } else {
                     this.head.prev = null;
                 }
-            } else if (index === this.size() -1){
+            } else if (index === this.size() -1) {
                 current = this.tail;
                 this.tail = current.prev;
                 this.tail.next = null;
-            } else{
-                while(i++ < index){
+            } else {
+                while(i++ < index) {
                     current = current.next;
                 }
                 current.prev.next = current.next;
                 current.next.prev = current.prev;
             }
             return current;
-        } else{
+        } else {
             return null;
         }
     }
     moveToFront(node) {
-        if(this.head === node){
+        if(this.head === node) {
             return;
-        }else if(this.tail === node){
+        } else if(this.tail === node) {
             node.prev.next = null;
             this.tail = node.prev;
-        }else{
+        } else {
             node.prev.next = node.next;
             node.next.prev = node.prev;
         }
@@ -116,9 +113,9 @@ class SelfOrganizedList {
     }
     reorganize(data) {
         let node = this.findNode(data);
-        if(!node){
+        if(!node) {
             return false;
-        }else{
+        } else {
             this.moveToFront(node);
             return true;
         }
@@ -129,17 +126,3 @@ module.exports = {
     SelfOrganizedList,
     Node
 };
-
-const sol = new SelfOrganizedList();
-
-
-
-console.log(sol.size()); // 3
-console.log(sol.at(1)); // Superficial
-
-sol.insert('Game of gnomes');
-sol.insert('Superficial');
-sol.insert('Breaking good');
-
-console.log(sol.size()); // 3
-console.log(sol.at(3)); // Superficial
