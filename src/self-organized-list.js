@@ -15,7 +15,6 @@ class SelfOrganizedList {
     }
     size() {
         if(this.head == null){
-            console.log("head is null length is 0");
             return 0;
         }
         let count = 0;
@@ -40,19 +39,19 @@ class SelfOrganizedList {
     }
     at(index) {
         let currentNode = this.head;
+        console.log(currentNode);
         const size = this.size();
+        console.log(size);
         let count = 0;
-        if(index === 0){
-            return this.head.data;
-        }
-        if (size === 0 || index < 0 || index > this.size()) {
+        if (size === 0 || index < 0 || index > size - 1) {
             return null;
+        }else{
+            while (count < index) {
+                currentNode = currentNode.next;
+                count++;
+            }
+            return currentNode.data;
         }
-        while (count < index) {
-            currentNode = currentNode.next;
-            count++;
-        }
-        return currentNode.data;
     }
     findNode(data) {
         let currentNode = this.head;
@@ -130,3 +129,17 @@ module.exports = {
     SelfOrganizedList,
     Node
 };
+
+const sol = new SelfOrganizedList();
+
+
+
+console.log(sol.size()); // 3
+console.log(sol.at(1)); // Superficial
+
+sol.insert('Game of gnomes');
+sol.insert('Superficial');
+sol.insert('Breaking good');
+
+console.log(sol.size()); // 3
+console.log(sol.at(3)); // Superficial
